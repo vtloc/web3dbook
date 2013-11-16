@@ -1,0 +1,567 @@
+<html>
+    <head>
+        <script src="js/jquery-1.10.2.min.js"></script>
+        
+        <script src="js/turn.min.js"></script>
+		<script src="js/jquery.slideshow.min.js"></script>
+		<script src="lib/highchart/highcharts.js"></script>
+		<script src="lib/highchart/exporting.js"></script>
+
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		
+		<link rel="stylesheet" href="lib/blueimp/blueimp-gallery.min.css">
+		<link rel="stylesheet" href="lib/bootstrap-gallery/css/bootstrap-image-gallery.min.css">
+		
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="css/ep_flip.css">
+		<link rel="stylesheet" href="lib/carousel/tango/skin.css">
+        
+		<script src="js/three.min.js"></script>
+    </head>
+    
+    <body>
+
+        <div id="toolbar" class="">
+            <!-- Where we put the controls here  -->
+            <div class="btn" id="btnBookmark"></div>
+			<div class="btn-group">
+			  <div type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+				<span class="glyphicon glyphicon-list"></span> <span class="caret" style="margin-left:6px;"></span>
+			  </div>
+			  <ul class="dropdown-menu" role="menu">
+				<li><a href="#" onclick="gotoPage(1);">Cover</a></li>
+				<li><a href="#" onclick="gotoPage(2);">Introduction</a></li>
+				<li><a href="#" onclick="gotoPage(3);">Outline</a></li>
+				<li><a href="#" onclick="gotoPage(4);">Technique</a></li>
+				<li><a href="#" onclick="gotoPage(5);">Coordinate system</a></li>
+				<li><a href="#" onclick="gotoPage(6);">Camera</a></li>
+				<li><a href="#" onclick="gotoPage(7);">What is WebGL?</a></li>
+				<li><a href="#" onclick="gotoPage(8);">Setup WebGL?</a></li>
+				<li><a href="#" onclick="gotoPage(9);">Init WebGLContext?</a></li>
+				<li><a href="#" onclick="gotoPage(12);">ThreeJs</a></li>
+				<li><a href="#" onclick="gotoPage();">ThreeJs</a></li>
+
+			  </ul>
+			</div>
+			
+            <div class="btn" id="btnAnnotation"><span class="glyphicon glyphicon-file"></span></div>
+            
+        </div>
+        
+        <div id="flipbook">
+			<div class="hard" style="background-color:#aaa;">
+				<div class="book-title">3D Web Programming</div>
+				<div class="book-author">JS Lover HCM</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Introduction</div>
+				<ul class="page-impress-content">
+					<li>What're we working on in this group?</li>
+					<li>The purpose of this presentation?</li>
+				</ul>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Outline</div>
+				<ul class="page-impress-content">
+					<li>Fundamentals</li>
+					<li>WebGL</li>
+					<li>ThreeJs</li>
+				</ul>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Technique</div>
+				<div class="page-impress-content">
+					<ul>
+					<li>CSS 3</li>
+					<li>Web GL</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Coordinate system</div>
+				<div class="page-content">
+					<img src="content/webgl-axes.png">
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Camera</div>
+				<div class="page-impress-content">
+					Orthographic vs perspective
+					<img src="content/perspective.png">
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">What is WebGL?</div>
+				<div class="page-content">
+					<code><pre>WebGL is a Web API that allows low-level graphics programming. </pre></code>
+					<code><pre>Based on open gl</pre></code>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Setup WebGL?</div>
+				<div class="page-content">
+					<code>
+					<pre>
+function start() {
+  var canvas = document.getElementById("glcanvas");
+
+  var gl = initWebGL(canvas);      // Initialize the GL context
+  
+  // Only continue if WebGL is available and working
+  
+  if (gl) {
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);     // Set clear color to black, fully opaque
+    gl.enable(gl.DEPTH_TEST);              // Enable depth testing
+    gl.depthFunc(gl.LEQUAL);                // Near things obscure far things
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); // Clear the color as well as the depth buffer.
+  }
+}</pre>
+					</code>
+				</div>
+			</div>
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Init WebGLContext?</div>
+				<div class="page-content">
+					<code>
+					<pre>
+function initWebGL(canvas) {
+  var gl = null;
+  
+  try {
+    // Try to grab the standard context. 
+	//If it fails, fallback to experimental.
+    gl = canvas.getContext("webgl") 
+		|| canvas.getContext("experimental-webgl");
+  }
+  catch(e) {}
+  
+  // If we don't have a GL context, give up now
+  if (!gl) {
+    alert("Unable to initialize WebGL. Your browser may not support it.");
+    gl = null;
+  }
+  
+  return gl;
+}</pre>
+					</code>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">...</div>
+				<div class="page-content">
+					<h1>Play with it here</h1>
+					<a href="http://jsfiddle.net/vtloc/J9xup/">http://jsfiddle.net/vtloc/J9xup/</a>
+					<p>It's troublesome, isn't it?</p>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="book-title">ThreeJs</div>
+				<div class="page-content">
+
+				</div>
+			</div>
+
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">What is it?</div>
+				<div class="page-content">
+					A library made to wrap around raw WebGL code.
+					<br>
+					Just like Unity, Cocos, Olong...
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Basic setup</div>
+				<div class="page-content">
+					http://jsfiddle.net/vtloc/7FYPT/
+					<code>
+					<pre style="overflow:scroll;height:400px;">
+// Setup the scene
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+// Initialize renderer, maybe webgl
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Generate objects such as cube, 
+var geometry = new THREE.CubeGeometry(1,1,1);
+var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+camera.position.z = 5;
+
+// show it
+renderer.render(scene, camera);
+
+</pre>
+					</code>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Project's structure</div>
+				<div class="page-content">
+					<ul>
+						<li>Setup: camera, lights</li>
+						<li>Add objects: define object's geometry, define object's material, texture ...</li>
+						<li>Render</li>
+						<li>Animate, move camera, interaction, ...</li>
+					</ul>
+				</div>
+			</div>
+
+			
+            <div class="hard" id="p2">
+				<div class="page-title">Cube</div>
+
+				<script src="demos/cube_anim.js"></script>
+				<script>
+					cube_anim("p2", 300, 300);
+				</script>
+            </div>
+ 
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Type of lights</div>
+				<div class="page-content">
+					<ul>
+						<li>Points lighting</li>
+						<li>Ambient Light</li>
+						<li>SpotLight</li>
+						<li>HemisphereLight</li>
+						<li>AreaLight</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">How to add light?</div>
+				<div class="page-content">
+				<code>
+<pre>// create a point light
+var pointLight =
+  new THREE.PointLight(0xFFFFFF);
+
+// set its position
+pointLight.position.x = 10;
+pointLight.position.y = 50;
+pointLight.position.z = 130;
+
+// add to the scene
+scene.add(pointLight);</pre>
+				</code>
+				</div>
+			</div>
+			
+			<div class="hard" style="background-color:#aaa;">
+				<div class="page-title">Type of lights</div>
+				<div class="page-content">
+					<ul>
+						<li>Points lighting</li>
+						<li>Ambient Light</li>
+						<li>SpotLight</li>
+						<li>HemisphereLight</li>
+						<li>AreaLight</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="hard">
+				<div class="page-title">Some tuts</div>
+				<div class="page-content">
+					<ul>
+						<li>http://blog.teamtreehouse.com/the-beginners-guide-to-three-js</li>
+						<li>http://www.html5canvastutorials.com/three/</li>
+					</ul>	
+				</div>
+			</div>
+			
+			<div class="hard">
+				<div class="book-title">Workshop</div>
+			</div>
+			
+			<div class="hard">
+				<div class="page-title">Setup the scene</div>
+				<div class="page-content">
+					<ul>
+						<li>Put more objects onto the scene</li>
+						<li>Move the objects around</li>
+						<li>Move the camera around</li>
+					</ul>	
+				</div>
+			</div>
+            
+			
+			<div class="hard">
+				<div class="page-title">Move around</div>
+				<div class="page-content">
+					<ul>
+						<li>Rotate camera with mouse events</li>
+						<li>Move backward, forward with keyboard</li>
+					</ul>	
+				</div>
+			</div>
+			
+			<div class="hard">
+				<div class="page-title">Animate objects</div>
+				<div class="page-content">
+					
+				</div>
+			</div>
+		</div>
+
+        <div id="store" class="panel panel-default">
+          <div class="panel-heading">Bookmark</div>
+          <div  class="panel-body">
+              <ul id="store-content">
+              
+              </ul>
+          </div>
+        </div>
+		
+		<div id="annotation">
+			<textarea id="annotation-content" placeholder="Type your note here"></textarea>
+			<script>
+			
+			</script>
+		</div>
+        
+		<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+		<div id="blueimp-gallery" class="blueimp-gallery">
+			<!-- The container for the modal slides -->
+			<div class="slides"></div>
+			<!-- Controls for the borderless lightbox -->
+			<h3 class="title"></h3>
+			<a class="prev"><</a>
+			<a class="next">></a>
+			<a class="close">X</a>
+			<a class="play-pause"></a>
+			<ol class="indicator"></ol>
+			<!-- The modal dialog, which will be used to wrap the lightbox content -->
+			<div class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<h4 class="modal-title"></h4>
+						</div>
+						<div class="modal-body next"></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default pull-left prev">
+								<i class="glyphicon glyphicon-chevron-left"></i>
+								Previous
+							</button>
+							<button type="button" class="btn btn-primary next">
+								Next
+								<i class="glyphicon glyphicon-chevron-right"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		<script>
+            // controls
+            var bookmarkObjs = [];
+            var pageTOC = {
+                0: 'Cover',
+                1: '',
+                1: '',
+                3: 'Foreword by the sponsor',
+                4: 'Table of content',
+                5: 'MBA Go to class or go online?',
+                6: 'Online MBA joins the \'in-crowd\'',
+                7: 'Easy steps for a successful application',
+                8: 'Credits',
+                
+            };
+
+           
+            function updateBookmarkList() {
+                $("#store-content").empty();
+                for( var i=0; i< bookmarkObjs.length; i++ ) {
+                    $("#store-content").append('<li>' + bookmarkObjs[i] + '-' + pageTOC[bookmarkObjs[i]] + '</li>');
+                }
+            }
+            
+            function addBookmark(element) {
+                var $saved =  $($(element).clone());
+                
+                lastTop += $saved.height;
+                
+                $saved.css('left', '0');
+                $saved.css('top', '0');
+                $saved.appendTo($("#store"));
+                
+                bookmarkObjs.push($saved);
+            }
+            
+			function initPageControls() {
+				var count = 1;
+				$('#flipbook div').each(function(){
+					$(this).append('<div class="page-controls" onclick="toggleBookmarkForPage(' + count + ');">Add / Remove bookmark</div><div class="bookmark"></div>');
+					count = count + 1;
+				});
+				
+			}
+			
+			function initFlipBook() {
+				var height = $(window).height(); 
+				var width = $(window).width();
+				
+				$("#flipbook").turn({
+					width: 600*2,
+					height: 500,
+					autoCenter: true
+				});
+				
+				$(window).bind('keydown', function(e){
+					if (e.keyCode==37)
+						$('#flipbook').turn('previous');
+					else if (e.keyCode==39)
+						$('#flipbook').turn('next');
+				});
+			}
+			
+			function gotoPage(index) {
+                $("#flipbook").turn("page", index);
+            }
+			
+			function toggleBookmarkForPage(pageno) {
+				// show the bookmark pointer of the page
+				var $bookmark = $('.p' + pageno + ' .bookmark');
+				
+				if( $bookmark.is(':visible') )
+				{
+					var index = bookmarkObjs.indexOf( pageno );
+					if (index > -1) {
+						bookmarkObjs.splice(index, 1);
+					}
+
+					$bookmark.hide();
+				}
+				else
+				{
+					bookmarkObjs.push( pageno );
+					bookmarkObjs.sort();
+					
+					$bookmark.show();
+				}
+			}
+			
+            function bookmarkCurrentPage() {
+                var currentPage = $("#flipbook").turn("page");
+				addBookmarkForPage( currentPage );
+            }
+			
+			function initToolbar() {
+				$("#btnBookmark").click(function() {
+				   if( $("#store").is(":visible") )
+				   {
+					   $("#btnBookmark").removeClass('btn-info');
+					   $("#store").hide();
+				   } else {
+						updateBookmarkList();
+						$("#btnBookmark").addClass('btn-info');
+						$("#store").show();
+					}
+				});
+				
+				$("#btnAnnotation").click(function() {
+				   if( $("#annotation").is(":visible") )
+				   {
+					   $("#btnAnnotation").removeClass('btn-info');
+					   $("#annotation").hide();
+				   } else {
+						
+						$("#btnAnnotation").addClass('btn-info');
+						$("#annotation").show();
+					}
+				});
+			}
+			
+			initPageControls();
+			initFlipBook();
+            initToolbar();
+        </script>
+        
+		<script src="lib/blueimp/jquery.blueimp-gallery.min.js"></script>
+		<script src="lib/bootstrap-gallery/js/bootstrap-image-gallery.min.js"></script>
+
+		<!--
+		<script>
+            
+            // drag content to save
+            var isDragging = false;
+            var currentDragNode = null;
+            $(document).mousedown(function(e) {
+				
+               // e.preventDefault();
+                
+                if(!$(e.target).hasClass("drag-drop"))
+                    return;
+                
+                var cloneNode = $(e.target).clone().appendTo("body");
+                var x = e.pageX;
+                var y = e.pageY;
+                $(cloneNode).css('position', 'absolute');
+                $(cloneNode).css('left', x + 'px');
+                $(cloneNode).css('top', y + 'px');
+                
+                $currentDragNode = $(cloneNode);
+                isDragging = true;
+                $("#flipbook").turn("disable", true);
+                
+                // show store
+                $("#store").show();
+            });
+            
+            $(document).mousemove(function(e) {
+                if( !isDragging )
+                    return;
+                
+                $currentDragNode.css('left', e.pageX + 'px');
+                $currentDragNode.css('top', e.pageY + 'px');
+            });
+            $(document).mouseup(function(e) {
+                if( !isDragging )
+                    return;
+               isDragging = false;
+                
+                // SAVE THE OBJECT TO THE store if dropped on
+                var position = $("#store").offset();
+                if( position.left < e.pageX 
+                   && position.top < e.pageY
+                   && position.left + 300 > e.pageX 
+                   && position.top + 300 > e.pageY )
+                {
+                    addBookmark($currentDragNode.clone());
+                    
+                }
+                $("#store").hide();
+                
+                // remove temp
+                 $currentDragNode.remove();
+                $currentDragNode = null;
+            });
+            
+        </script>
+		
+		-->
+    </body>
+
+</html>
